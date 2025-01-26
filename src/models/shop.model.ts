@@ -11,8 +11,8 @@ export interface IShop extends Document {
   updatedAt?: Date;
 }
 
-const COLLECTION_NAME = 'Shop';
-const DOCUMENT_NAME = 'Shops';
+export const COLLECTION_NAME = 'Shops';
+const DOCUMENT_NAME = 'Shop';
 
 const shopSchema = new Schema<IShop>(
   {

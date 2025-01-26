@@ -1,0 +1,7 @@
+@url_dev = http://localhost:3002
+
+POST {{url_dev}}/v1/api/api-key
+Content-Type: application/json
+
+{
+}

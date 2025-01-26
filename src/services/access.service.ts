@@ -146,30 +146,13 @@ export class AccessService {
             });
 
             return {
-                code: 201,
-                metadata: {
-                    shop: getIntoData({
-                        fields: [
-                            "_id",
-                            "name",
-                            "email",
-                            "password",
-                            "status",
-                            "verify",
-                            "roles",
-                            "createdAt",
-                            "updatedAt"
-                        ],
-                        object: newShop
-                    }),
-                    tokens
-                }
+                shop: getIntoData({
+                    fields: ["_id", "name", "email", "password", "status", "verify", "roles", "createdAt", "updatedAt"],
+                    object: newShop
+                }),
+                tokens
             }
         }
 
-        return {
-            code: 200,
-            metadata: null
-        }
     }
 }

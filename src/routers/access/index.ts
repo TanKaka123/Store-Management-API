@@ -4,6 +4,7 @@ import { asyncHandler } from "../../helpers/ansycHandler";
 import { authentication } from "../../auth/auth.utils";
 
 const router = Router();
+router.post('/api-key', asyncHandler(accessController.createApiKey));
 
 router.post('/shop/signup', asyncHandler(accessController.signUp));
 

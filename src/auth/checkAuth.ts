@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction, RequestHandler } from 'express';
 import { findByKey } from '../services/apiKey.service';
+import { ConfictRequestError } from '../core/error.response';
 
 const HEADER = {
     API_KEY: "x-api-key",
@@ -9,19 +10,15 @@ const HEADER = {
 // Middleware function with proper type definition
 export const checkApiKey = async (req: any, res: any, next: any) => {
     try {
-        const key = req.headers[HEADER.API_KEY]?.toString();
+        const key = req.headers[HEADER.API_KEY];
 
         if (!key) {
-            return res.status(403).json({
-                message: 'Forbidden: Missing API Key',
-            });
+            throw new ConfictRequestError("Forbidden: Missing API Key")
         }
-
         const objKey = await findByKey(key);
+        console.log({objKey})
         if (!objKey) {
-            return res.status(403).json({
-                message: 'Forbidden: Invalid API Key',
-            });
+            throw new ConfictRequestError("Forbidden: Invalid API Key")
         }
 
         req.objectKey = objKey;
@@ -38,11 +35,11 @@ export const checkApiKey = async (req: any, res: any, next: any) => {
 export const checkPermissions = (req: any, res: any, next: any) => {
     const { objectKey } = req;
 
-    if(!objectKey || objectKey?.permissions?.length === 0){
+    if (!objectKey || objectKey?.permissions?.length === 0) {
         return res.status(403).json({
             message: 'Forbidden: API Key haven"t permission',
         });
     }
-    
+
     return next();
 }

@@ -8,8 +8,8 @@ export interface IKeyToken {
     refreshToken: string
 }
 
-const DOCUMENT_NAME = "KeyTokens";
-const COLLCTION_NAME = "KeyToken";
+const DOCUMENT_NAME = "KeyToken";
+const COLLECTION_NAME = "KeyTokens";
 
 const keyTokenSchema = new Schema({
     userId: {
@@ -34,7 +34,7 @@ const keyTokenSchema = new Schema({
         require: true
     }
 }, {
-    collection: COLLCTION_NAME,
+    collection: COLLECTION_NAME,
     timestamps: true
 })
 

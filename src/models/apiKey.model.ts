@@ -1,7 +1,7 @@
 import { model,  Schema } from "mongoose";
 
-const DOCUMENT_NAME = "apiKeys";
-const COLLECTION_NAME = "apiKey";
+const DOCUMENT_NAME = "apiKey";
+const COLLECTION_NAME = "apiKeys";
 
 const EPermission = ["0000", "1111", "2222"];
 interface IApiKeySchema {

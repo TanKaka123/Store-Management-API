@@ -1,7 +1,7 @@
 import access from './access';
+import product from './product';
 import { checkApiKey, checkPermissions } from "../auth/checkAuth";
 import { Router, Request, Response, NextFunction } from "express";
-import { authentication } from '../auth/auth.utils';
 
 const router = Router();
 
@@ -11,10 +11,11 @@ router.use(checkApiKey)
 router.use(checkPermissions);
 
 router.use('/v1/api', access);
+router.use('/v1/api', product);
 
 // NOT FOUND ENDPOINT
 router.use((_, __, next) => {
-    const error = new Error("Not Found") as Error & { status?: number };
+    const error = new Error("Not found") as Error & { status?: number };
     error.status = 404;
     next(error);
 });

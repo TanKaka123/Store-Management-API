@@ -1,0 +1,22 @@
+@url_dev = http://localhost:3002
+
+POST {{url_dev}}/v1/api/product
+Content-Type: application/json
+x-api-key: 4e13051b-8fe9-4146-beb6-b08449d1cfd9
+authorization: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Nzk1ZWFiNjkwODg5ZWU1MGYxMWZkMWQiLCJlbWFpbCI6IjEyM0BnbWFpbC5jb20iLCJpYXQiOjE3Mzc4NzgxOTgsImV4cCI6MTczODA1MDk5OH0.V5u1H5TgKCcgsdUOLwKK7Hclthv26SeslUTNzfaNbe-K2zOtPeW3y1vNqUKLHXEb480SvAfFd-Flzlh3aQ6ys9MRGls0vWAzhuM8sk2k14TpwcBvjb7cDQsgdqzqlaH7agEJPaMJKuILHW10AH3gZMeWjb0laPN1WEUt7nSMT11ddCokidxBKO2EaTwvfa0XjiZ2ElXq6jaeDwzPx_Po6t310_cz6-yXOdAaUbi23V4SYZzZ9zY9ZDR1sAC1KmkSAsUj6cAMs4COb-BhuhY3_5GwYHxjAKRbrBxY5iAXXFBLKDKeCJHfCvzn1Xqx8IYYlvaZ_ZsrMLZgtDaCEJtrpA 
+x-client-id: 6795eab690889ee50f11fd1d
+
+{
+  "name": "Smartphone hàng trung quốc đó",
+  "thumb": "https://example.com/images/smartphone.png",
+  "description": "A powerful smartphone with the latest features.",
+  "price": 699.99,
+  "quantity": 25,
+  "type": "Electronic",
+  "attributes": {
+    "type": "Electronic",
+    "manufacturer": "TechCorp",
+    "model": "TC-2025",
+    "color": "Black"
+  }
+}
