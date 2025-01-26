@@ -1,7 +1,7 @@
 import { model, Model, Schema } from "mongoose";
 
 
-interface IKeyToken {
+export interface IKeyToken {
     userId: string,
     publicKey: string,
     privateKey: string,

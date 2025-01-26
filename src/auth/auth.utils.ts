@@ -4,6 +4,7 @@ import { Request, Response } from "express";
 import { NotFoundError, UnthorizedError } from "../core/error.response";
 import { KeyTokenService } from "../services/keyToken.service";
 import { Types } from "mongoose";
+import { AuthRequest } from "../type/request";
 
 const HEADER = {
     API_KEY: "x-api-key",
@@ -68,7 +69,7 @@ export const authentication = asyncHandler(async (req: Request, res: Response, n
         if (userId !== decodedUser.userId) {
             throw new UnthorizedError('Invalid User');
         }
-        (req as any).keyStore = keyStore;
+        (req as AuthRequest).keyStore = keyStore;
         return next();
     }
     catch (error) {

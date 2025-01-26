@@ -15,7 +15,7 @@ export class SuccessResponse {
     statusCode: number;
     metadata: Record<string, string>;
 
-    constructor({ message = REASON_STATUS.OK, statusCode = STATUS_CODE.OK, metadata }: { message: string, statusCode?: number, metadata: Record<string, any> }) {
+    constructor({ message = REASON_STATUS.OK, statusCode = STATUS_CODE.OK, metadata = {} }: { message: string, statusCode?: number, metadata?: Record<string, any> }) {
         this.message = message
         this.statusCode = statusCode;
         this.metadata = metadata;

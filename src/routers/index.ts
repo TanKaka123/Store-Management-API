@@ -9,8 +9,6 @@ const router = Router();
 router.use(checkApiKey)
 // check permission
 router.use(checkPermissions);
-// auth
-router.use(authentication);
 
 router.use('/v1/api', access);
 
