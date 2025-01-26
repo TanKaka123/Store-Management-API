@@ -4,14 +4,28 @@ import { Created, SuccessResponse } from '../core/success.response';
 import { AuthRequest } from '../type/request';
 
 class AccessController {
-    logout = async (req: AuthRequest, res: Response, next: NextFunction) => {
-        try{
-            await AccessService.logout({userId: req.keyStore.userId});
+    handleRefreshToken = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const newToken = await AccessService.handleRefreshToken({ refreshToken: req.body?.refreshToken })
+            new SuccessResponse({
+                message: 'Handle refresh token successful !',
+                metadata: newToken
+            }).send(res)
+        }
+        catch (error) {
+            next(error);
+        }
+    }
+
+    logout = async (req: Request, res: Response, next: NextFunction) => {
+        const authReq = req as AuthRequest;
+        try {
+            await AccessService.logout({ userId: authReq.keyStore.userId });
             new SuccessResponse({
                 message: 'Logout successful !'
             }).send(res)
         }
-        catch(error){
+        catch (error) {
             next(error);
         }
     }

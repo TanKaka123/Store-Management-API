@@ -7,10 +7,7 @@ import { KeyTokenService } from './keyToken.service';
 import { createPairToken } from '../auth/auth.utils';
 import { getIntoData } from '../utils';
 import { BadRequestError, UnthorizedError } from '../core/error.response';
-import { findShopByEmail } from './shop.service';
-import { Types } from 'mongoose';
-import { SuccessResponse } from '../core/success.response';
-
+import { findShopByEmail, findShopByUserId } from './shop.service';
 
 const ROLES_SHOP = {
     SHOP: 0,
@@ -19,17 +16,46 @@ const ROLES_SHOP = {
 }
 
 export class AccessService {
+    static handleRefreshToken = async ({ refreshToken }: { refreshToken: string }) => {
+        const storedToken = await KeyTokenService.findByRefreshToken(refreshToken);
+
+        if (!storedToken) {
+            throw new UnthorizedError("Invalid or expired refresh token")
+        }
+
+        const storedShop = await findShopByUserId(storedToken.userId)
+
+        if (!storedShop) {
+            throw new BadRequestError("Error: shop is not found")
+        }
+
+        await KeyTokenService.removeByUserId(storedToken.userId);
+
+        const newPairToken = await createPairToken(
+            { userId: storedToken.userId, email: storedShop.email }, storedToken.publicKey, storedToken.privateKey
+        )
+
+        if (!newPairToken) {
+            throw new BadRequestError("Error: refresh token error")
+        }
+
+        await KeyTokenService.createKeyToken({
+            userId: storedToken.userId,
+            privateKey: storedToken.privateKey,
+            publicKey: storedToken.publicKey,
+            refreshToken: newPairToken.refreshToken
+        })
+
+        return {
+            tokens: newPairToken
+        }
+
+    }
 
     static logout = async ({ userId }: { userId: string }) => {
         return await KeyTokenService.removeByUserId(userId);
     }
 
-    /*{
-        1. check email
-        2. check password
-        3. gen access token and refresh token
-        4. return data login
-    }*/
     static login = async ({ email, password, refreshToken }: { email: string, password: string, refreshToken?: string }) => {
         // 0. find shop by user id
         const foundShop = await findShopByEmail(email);
