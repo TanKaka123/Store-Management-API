@@ -7,7 +7,7 @@ import { KeyTokenService } from './keyToken.service';
 import { createPairToken } from '../auth/auth.utils';
 import { getIntoData } from '../utils';
 import { BadRequestError, UnthorizedError } from '../core/error.response';
-import { findShopByEmail, findShopByUserId } from './shop.service';
+import { ShopService } from './shop.service';
 
 const ROLES_SHOP = {
     SHOP: 0,
@@ -23,7 +23,7 @@ export class AccessService {
             throw new UnthorizedError("Invalid or expired refresh token")
         }
 
-        const storedShop = await findShopByUserId(storedToken.userId)
+        const storedShop = await ShopService.findShopByUserId(storedToken.userId)
 
         if (!storedShop) {
             throw new BadRequestError("Error: shop is not found")
@@ -58,7 +58,7 @@ export class AccessService {
 
     static login = async ({ email, password, refreshToken }: { email: string, password: string, refreshToken?: string }) => {
         // 0. find shop by user id
-        const foundShop = await findShopByEmail(email);
+        const foundShop = await ShopService.findShopByEmail(email);
         if (!foundShop) {
             throw new BadRequestError("Not found shop");
         }

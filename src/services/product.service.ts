@@ -1,6 +1,7 @@
 import { BadRequestError } from "../core/error.response";
 import { ClothingModel, ElectronicModel, EPRODUCT_TYPE, IProduct, ProductModel } from "../models/product.mode";
 import { Types } from "mongoose";
+import { findAllProduct } from "../models/repositories/product.repo";
 
 export class ProductServiceFactory {
     static async createProduct(payload: IProduct) {
@@ -13,17 +14,22 @@ export class ProductServiceFactory {
                 throw new BadRequestError(`Invalid type ${payload.type}`);
         }
     }
+
+    static async findAllDraftProductByShopId({ shopId, limit = 50, skip = 0 }: { shopId: string, limit?: number, skip?: number }) {
+        const query = { shop: shopId, isDraft: true };
+        return await findAllProduct({ query, limit, skip });
+    }
 }
 
 export class ProductService {
-    protected product: IProduct; // Change private to protected
+    protected product: IProduct;
 
     constructor(product: IProduct) {
         this.product = product;
     }
 
     async createSingleProduct(attributeId: Types.ObjectId) {
-        const { attributes, ...restProduct} = this.product;
+        const { attributes, ...restProduct } = this.product;
         const productDoc = await ProductModel.create({ ...restProduct, _id: attributeId });
         return productDoc.toObject();
     }

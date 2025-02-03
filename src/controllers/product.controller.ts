@@ -22,4 +22,18 @@ export class ProductController {
             next(error)
         }
     }
+
+    static async getListDraftProductByShopId(req: Request, res: Response, next: NextFunction) {
+        const authReq = req as AuthRequest;
+        try {
+            const listDraftProduct = await ProductServiceFactory.findAllDraftProductByShopId({ ...req.body, shopId: authReq.keyStore.userId });
+            new SuccessResponse({
+                message: "Get all draft product by shop id successful",
+                metadata: listDraftProduct
+            })
+        }
+        catch (error) {
+            next(error);
+        }
+    }
 }

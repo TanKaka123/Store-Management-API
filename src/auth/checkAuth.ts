@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction, RequestHandler } from 'express';
-import { findByKey } from '../services/apiKey.service';
 import { ConfictRequestError } from '../core/error.response';
+import { ApiKeyService } from '../services/apiKey.service';
 
 const HEADER = {
     API_KEY: "x-api-key",
@@ -15,7 +15,7 @@ export const checkApiKey = async (req: any, res: any, next: any) => {
         if (!key) {
             throw new ConfictRequestError("Forbidden: Missing API Key")
         }
-        const objKey = await findByKey(key);
+        const objKey = await ApiKeyService.findByKey(key);
         console.log({objKey})
         if (!objKey) {
             throw new ConfictRequestError("Forbidden: Invalid API Key")

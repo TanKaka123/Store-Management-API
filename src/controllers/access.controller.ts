@@ -4,7 +4,7 @@ import { Created, SuccessResponse } from '../core/success.response';
 import { AuthRequest } from '../type/request';
 import { BadRequestError } from '../core/error.response';
 import { error } from 'console';
-import { createApiKey } from '../services/apiKey.service';
+import { ApiKeyService } from '../services/apiKey.service';
 
 class AccessController {
     handleRefreshToken = async (req: Request, res: Response, next: NextFunction) => {
@@ -61,7 +61,7 @@ class AccessController {
     createApiKey = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const newApiKey = crypto.randomUUID()
-            const data = await createApiKey(newApiKey);
+            const data = await ApiKeyService.createApiKey(newApiKey);
             new SuccessResponse({
                 message: "Create API key successful",
                 statusCode: 200,
