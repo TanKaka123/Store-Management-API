@@ -35,7 +35,9 @@ export const checkApiKey = async (req: any, res: any, next: any) => {
 export const checkPermissions = (req: any, res: any, next: any) => {
     const { objectKey } = req;
 
-    if (!objectKey || objectKey?.permissions?.length === 0) {
+    if (!objectKey 
+        // || objectKey?.permissions?.length === 0
+    ) {
         return res.status(403).json({
             message: 'Forbidden: API Key haven"t permission',
         });

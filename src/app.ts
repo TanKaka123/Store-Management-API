@@ -3,10 +3,10 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import compression from 'compression';
 import instanceMongodb from './dbs/init.mongodb';
-import { checkOverload } from './helpers/check.connect';
-
+import cors from "cors";
 import * as dotenv from 'dotenv';
 import router from './routers';
+import { SocketGateway } from './libs/chat-gateway';
 
 dotenv.config();
 
@@ -24,9 +24,12 @@ app.use(express.json())
 app.use(express.urlencoded({
     extended: true
 }))
+app.use(cors({ origin: "*", methods: "GET,POST,PUT,PATCH,DELETE,OPTIONS" }));
+
 
 app.use(router);
 
+new SocketGateway();
 // DATABASE
 // checkOverload();
 

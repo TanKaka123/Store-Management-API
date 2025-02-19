@@ -6,13 +6,13 @@ import { authentication } from "../../auth/auth.utils";
 const router = Router();
 router.post('/api-key', asyncHandler(accessController.createApiKey));
 
-router.post('/shop/signup', asyncHandler(accessController.signUp));
+router.post('/auth/signup', asyncHandler(accessController.signUp));
 
-router.post('/shop/login', asyncHandler(accessController.logIn));
+router.post('/auth/login', asyncHandler(accessController.logIn));
 
 router.use(authentication);
-router.post('/shop/logout', asyncHandler(accessController.logout));
-router.post('/shop/refresh-token', asyncHandler(accessController.handleRefreshToken));
+router.post('/auth/logout', asyncHandler(accessController.logout));
+router.post('/auth/refresh-token', asyncHandler(accessController.handleRefreshToken));
 
 
 export default router;
